@@ -1,11 +1,16 @@
-#!/usr/bin/python3
 import csv
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import locale
+from i18n.translator import Translator
 
-def revisar_datos(archivo_csv, valor_max_segundos, num_lineas):
-    with open(archivo_csv, 'r', encoding='utf-8-sig') as archivo:
+
+supported_languages = ['es_ES', 'fr_FR', 'de_DE']
+tr = Translator('.', supported_languages, 'es_ES')
+print (_('Hello world!'))
+
+def revisar_datos(csv_file, valor_max_segundos, num_lineas):
+    with open(csv_file, 'r', encoding='utf-8-sig') as archivo:
         lector_csv = csv.reader(archivo)
         encabezados = [encabezado.strip() for encabezado in next(lector_csv)]  # Eliminar espacios en los encabezados
 
@@ -35,18 +40,18 @@ def revisar_datos(archivo_csv, valor_max_segundos, num_lineas):
             seconds, value, model, diferencia_porcentaje = datos_ordenados[i]
             resultado_text.insert(tk.END, f"{seconds:.0f} segundos -> {value:.0f}W vs {model:.0f}W -> {diferencia_porcentaje:.2f}%\n")
 
-def seleccionar_archivo():
-    archivo_csv = filedialog.askopenfilename(filetypes=[("Archivos CSV", "*.csv")])
+def select_file():
+    csv_file = filedialog.askopenfilename(filetypes=[("Archivos CSV", "*.csv")])
     archivo_entry.delete(0, tk.END)
-    archivo_entry.insert(tk.END, archivo_csv)
+    archivo_entry.insert(tk.END, csv_file)
 
 def procesar():
-    archivo_csv = archivo_entry.get()
+    csv_file = archivo_entry.get()
     valor_max_segundos = float(segundos_entry.get())
     num_lineas = int(lineas_entry.get())
 
     resultado_text.delete(1.0, tk.END)
-    revisar_datos(archivo_csv, valor_max_segundos, num_lineas)
+    revisar_datos(csv_file, valor_max_segundos, num_lineas)
 
 # Configurar el separador decimal como punto
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
@@ -61,7 +66,7 @@ archivo_label = tk.Label(ventana, text="Archivo CSV:")
 archivo_label.pack()
 archivo_entry = tk.Entry(ventana, width=40)
 archivo_entry.pack()
-archivo_boton = tk.Button(ventana, text="Seleccionar", command=seleccionar_archivo)
+archivo_boton = tk.Button(ventana, text="Seleccionar", command=select_file)
 archivo_boton.pack()
 
 # Etiqueta y campo de texto para el valor máximo de los segundos
