@@ -1,0 +1,90 @@
+#!/usr/bin/python3
+import csv
+import tkinter as tk
+from tkinter import filedialog, messagebox
+import locale
+
+def revisar_datos(archivo_csv, valor_max_segundos, num_lineas):
+    with open(archivo_csv, 'r', encoding='utf-8-sig') as archivo:
+        lector_csv = csv.reader(archivo)
+        encabezados = [encabezado.strip() for encabezado in next(lector_csv)]  # Eliminar espacios en los encabezados
+
+        # Verificar que las columnas requeridas estén presentes en el archivo CSV
+        if 'secs' not in encabezados or '42 days' not in encabezados or 'ECP' not in encabezados:
+            messagebox.showerror("Error", "El archivo CSV no tiene las columnas requeridas.")
+            return
+
+        datos = []
+        for fila in lector_csv:
+            # Leer los datos de cada fila
+            seconds = locale.atof(fila[encabezados.index('secs')])
+            value = locale.atof(fila[encabezados.index('42 days')])
+            model = locale.atof(fila[encabezados.index('ECP')])
+
+            if seconds <= valor_max_segundos:
+                # Calcular la diferencia en porcentaje
+                diferencia_porcentaje = ((model - value) / value) * 100
+
+                datos.append((seconds, value, model, diferencia_porcentaje))
+
+        # Ordenar los datos por la diferencia en porcentaje de mayor a menor
+        datos_ordenados = sorted(datos, key=lambda x: x[3], reverse=True)
+
+        # Imprimir el número específico de líneas ordenadas
+        for i in range(min(num_lineas, len(datos_ordenados))):
+            seconds, value, model, diferencia_porcentaje = datos_ordenados[i]
+            resultado_text.insert(tk.END, f"{seconds:.0f} segundos -> {value:.0f}W vs {model:.0f}W -> {diferencia_porcentaje:.2f}%\n")
+
+def seleccionar_archivo():
+    archivo_csv = filedialog.askopenfilename(filetypes=[("Archivos CSV", "*.csv")])
+    archivo_entry.delete(0, tk.END)
+    archivo_entry.insert(tk.END, archivo_csv)
+
+def procesar():
+    archivo_csv = archivo_entry.get()
+    valor_max_segundos = float(segundos_entry.get())
+    num_lineas = int(lineas_entry.get())
+
+    resultado_text.delete(1.0, tk.END)
+    revisar_datos(archivo_csv, valor_max_segundos, num_lineas)
+
+# Configurar el separador decimal como punto
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
+# Crear la ventana principal
+ventana = tk.Tk()
+ventana.title("Revisar Datos CSV")
+ventana.geometry("400x300")
+
+# Etiqueta y campo de texto para el archivo CSV
+archivo_label = tk.Label(ventana, text="Archivo CSV:")
+archivo_label.pack()
+archivo_entry = tk.Entry(ventana, width=40)
+archivo_entry.pack()
+archivo_boton = tk.Button(ventana, text="Seleccionar", command=seleccionar_archivo)
+archivo_boton.pack()
+
+# Etiqueta y campo de texto para el valor máximo de los segundos
+segundos_label = tk.Label(ventana, text="Valor máximo de los segundos:")
+segundos_label.pack()
+segundos_entry = tk.Entry(ventana)
+segundos_entry.insert(0, "1800")
+segundos_entry.pack()
+
+# Etiqueta y campo de texto para el número de líneas a imprimir
+lineas_label = tk.Label(ventana, text="Número de líneas a imprimir:")
+lineas_label.pack()
+lineas_entry = tk.Entry(ventana)
+lineas_entry.insert(0, "5")
+lineas_entry.pack()
+
+# Botón para procesar los datos
+procesar_boton = tk.Button(ventana, text="Procesar", command=procesar)
+procesar_boton.pack()
+
+# Área de texto para mostrar los resultados
+resultado_text = tk.Text(ventana, height=5, width=80)
+resultado_text.pack()
+
+# Iniciar el bucle principal de la interfaz gráfica
+ventana.mainloop()
