@@ -2,12 +2,14 @@ import csv
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import locale
-from i18n.translator import Translator
+import gettext
 
+_ = gettext.gettext
+current_locale = locale.getdefaultlocale()[0].split('_')[0].lower()
 
-supported_languages = ['es_ES', 'fr_FR', 'de_DE']
-tr = Translator('.', supported_languages, 'es_ES')
-print (_('Hello world!'))
+my_locale = gettext.translation('base', localedir='locales', languages=[current_locale])
+my_locale.install()
+_ = my_locale.gettext
 
 def revisar_datos(csv_file, valor_max_segundos, num_lineas):
     with open(csv_file, 'r', encoding='utf-8-sig') as archivo:
@@ -41,7 +43,7 @@ def revisar_datos(csv_file, valor_max_segundos, num_lineas):
             resultado_text.insert(tk.END, f"{seconds:.0f} segundos -> {value:.0f}W vs {model:.0f}W -> {diferencia_porcentaje:.2f}%\n")
 
 def select_file():
-    csv_file = filedialog.askopenfilename(filetypes=[("Archivos CSV", "*.csv")])
+    csv_file = filedialog.askopenfilename(filetypes=[(_("Archivos CSV"), "*.csv")])
     archivo_entry.delete(0, tk.END)
     archivo_entry.insert(tk.END, csv_file)
 
@@ -58,7 +60,7 @@ locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 # Crear la ventana principal
 ventana = tk.Tk()
-ventana.title("Revisar Datos CSV")
+ventana.title(_("Revisar Datos CSV"))
 ventana.geometry("400x300")
 
 # Etiqueta y campo de texto para el archivo CSV
@@ -66,7 +68,7 @@ archivo_label = tk.Label(ventana, text="Archivo CSV:")
 archivo_label.pack()
 archivo_entry = tk.Entry(ventana, width=40)
 archivo_entry.pack()
-archivo_boton = tk.Button(ventana, text="Seleccionar", command=select_file)
+archivo_boton = tk.Button(ventana, text=(_("Seleccionar")), command=select_file)
 archivo_boton.pack()
 
 # Etiqueta y campo de texto para el valor máximo de los segundos
