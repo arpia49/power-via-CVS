@@ -18,7 +18,7 @@ def revisar_datos(csv_file, valor_max_segundos, num_lineas):
 
         # Verificar que las columnas requeridas estén presentes en el archivo CSV
         if 'secs' not in encabezados or '42 days' not in encabezados or 'ECP' not in encabezados:
-            messagebox.showerror("Error", "El archivo CSV no tiene las columnas requeridas.")
+            messagebox.showerror((_("Error")), (_("El archivo CSV no tiene las columnas requeridas.")))
             return
 
         datos = []
@@ -64,7 +64,7 @@ ventana.title(_("Revisar Datos CSV"))
 ventana.geometry("400x300")
 
 # Etiqueta y campo de texto para el archivo CSV
-archivo_label = tk.Label(ventana, text="Archivo CSV:")
+archivo_label = tk.Label(ventana, text=(_("Archivo CSV:")))
 archivo_label.pack()
 archivo_entry = tk.Entry(ventana, width=40)
 archivo_entry.pack()
@@ -72,21 +72,21 @@ archivo_boton = tk.Button(ventana, text=(_("Seleccionar")), command=select_file)
 archivo_boton.pack()
 
 # Etiqueta y campo de texto para el valor máximo de los segundos
-segundos_label = tk.Label(ventana, text="Valor máximo de los segundos:")
+segundos_label = tk.Label(ventana, text=(_("Valor máximo de los segundos:")))
 segundos_label.pack()
 segundos_entry = tk.Entry(ventana)
 segundos_entry.insert(0, "1800")
 segundos_entry.pack()
 
 # Etiqueta y campo de texto para el número de líneas a imprimir
-lineas_label = tk.Label(ventana, text="Número de líneas a imprimir:")
+lineas_label = tk.Label(ventana, text=(_("Número de líneas a imprimir:")))
 lineas_label.pack()
 lineas_entry = tk.Entry(ventana)
 lineas_entry.insert(0, "5")
 lineas_entry.pack()
 
 # Botón para procesar los datos
-procesar_boton = tk.Button(ventana, text="Procesar", command=procesar)
+procesar_boton = tk.Button(ventana, text=(_("Procesar")), command=procesar)
 procesar_boton.pack()
 
 # Área de texto para mostrar los resultados

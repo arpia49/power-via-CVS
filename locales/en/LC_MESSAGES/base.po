@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-08-03 00:14+0200\n"
-"PO-Revision-Date: 2023-08-03 00:44+0200\n"
+"POT-Creation-Date: 2023-08-03 10:01+0200\n"
+"PO-Revision-Date: 2023-08-03 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -13,6 +13,14 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: .\n"
 
+#: .\import csv.pyw:21
+msgid "El archivo CSV no tiene las columnas requeridas."
+msgstr "The CSV file format does not match the expectations."
+
+#: .\import csv.pyw:21
+msgid "Error"
+msgstr "Error"
+
 #: .\import csv.pyw:46
 msgid "Archivos CSV"
 msgstr "CSV file"
@@ -20,3 +28,23 @@ msgstr "CSV file"
 #: .\import csv.pyw:63
 msgid "Revisar Datos CSV"
 msgstr "Power over CSV"
+
+#: .\import csv.pyw:67
+msgid "Archivo CSV:"
+msgstr "CSV file:"
+
+#: .\import csv.pyw:71
+msgid "Seleccionar"
+msgstr "Select file"
+
+#: .\import csv.pyw:75
+msgid "Valor máximo de los segundos:"
+msgstr "Max seconds to evaluate:"
+
+#: .\import csv.pyw:82
+msgid "Número de líneas a imprimir:"
+msgstr "Number of lines to be printed:"
+
+#: .\import csv.pyw:89
+msgid "Procesar"
+msgstr "Run"

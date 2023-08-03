@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-08-03 00:14+0200\n"
+"POT-Creation-Date: 2023-08-03 10:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,11 +15,39 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
+#: .\import csv.pyw:21
+msgid "El archivo CSV no tiene las columnas requeridas."
+msgstr ""
+
+#: .\import csv.pyw:21
+msgid "Error"
+msgstr ""
+
 #: .\import csv.pyw:46
 msgid "Archivos CSV"
 msgstr ""
 
 #: .\import csv.pyw:63
 msgid "Revisar Datos CSV"
+msgstr ""
+
+#: .\import csv.pyw:67
+msgid "Archivo CSV:"
+msgstr ""
+
+#: .\import csv.pyw:71
+msgid "Seleccionar"
+msgstr ""
+
+#: .\import csv.pyw:75
+msgid "Valor máximo de los segundos:"
+msgstr ""
+
+#: .\import csv.pyw:82
+msgid "Número de líneas a imprimir:"
+msgstr ""
+
+#: .\import csv.pyw:89
+msgid "Procesar"
 msgstr ""
 
